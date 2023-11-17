@@ -1,7 +1,7 @@
 # Cyber Security Base project I
 Course project for Cyber Security Base 2023 (https://cybersecuritybase.mooc.fi/)
 
-For this project, I used a web application that I had made for another course as a base. The original project did not have the vulnerabilities listed below. 
+For this project, I used a web application that I had made for another course as a base. The application is a simple chat forum. The original project did not have the vulnerabilities listed below. 
 
 This project is implemented with Python and Flask. For the application to work, you must have PostgreSQL installed on your computer. If you do not have it installed, see https://www.postgresql.org/download/
 
