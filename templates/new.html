@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<form action="/new" method="POST">
+  <p>Otsikko:<br>
+  <input type="text" id="title" name="title"></p>
+  <p>Aihe:
+    <select name="topic">
+      {% for topic in all_topics %}
+        <option value={{topic[0]}}>{{topic[1]}}</option>
+      {% endfor %}
+    </select>
+    </p>
+  <p>Aloituskommenttisi:</p>
+    <textarea id="comment" name="comment" rows="4" cols="50">
+    </textarea>
+  <input type="hidden" id="user_id "name="user_id" value={{session.user_id}}>
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+  <br>
+  <input type="submit" value="Lähetä">
+</form>
+
+<a href="/">Palaa etusivulle</a>
+
+{% endblock %}

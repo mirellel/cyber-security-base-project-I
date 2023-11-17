@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2> Etusivu </h2>
+{% if session.username %}
+<p>Olet kirjautunut nimellä {{ session.username }}</p>
+  {% if session.user_role %}
+    {% if session.user_role == 2 %}
+      <p>Roolisi: ylläpitäjä</p>
+    {% endif %}
+    {% if session.user_role == 1 %}
+      <p>Roolisi: käyttäjä</p>
+    {% endif %}
+  {% endif %}
+<form action="/account" method="POST">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+  <input type="hidden" name="user_id" value="{{ session.user_id }}">
+  <input type="hidden" name="username" value="{{ session.username }}">
+  <input type="submit" value="Tilini">
+</form>
+    <a href="/logout">Kirjaudu ulos</a>
+<br><br>
+  <a href="/new">Uusi keskustelu</a>
+{% else %}
+  <p><a href="/login">Kirjaudu sisään</a></p>
+<br>
+{% endif %}
+<br><br>
+
+<a href="/topics">Selaa aiheita</a>
+<br>
+Viestien määrä: {{post_count[0]}}
+  {% if all_posts %}
+    <p>Viestit:</p>
+      <hr>
+      {% for title in all_posts %}
+        {% if title[6] %}
+          <a href="/post/{{ title[0] }}" style="color:rgb(95, 23, 73); font-size:22px">{{ title[1] }}<a/>
+          <p2 style="color: rgb(95, 23, 73); font-size: 16px;">{{ title[3] }}</p2>
+          <br><br>
+          <b style="color: rgb(95, 23, 73); font-size: medium;">{{ title[2] }}</b>
+          {% for comments in comment_count %}
+            {% if comments[0] == title[0] %}
+              <p>Kommentteja:{{ comments[1] }}</p>
+            {% endif %}
+          {% endfor %}
+          {% for likes in like_count %}
+            {% if likes[0] == title[0] %}
+              <p>Tykkäykset:{{ likes[1] }}</p>
+            {% endif %}
+          {% endfor %}
+          <br>
+          {% if session.user_role==2 or session.user_id==title[4] %}
+            <form action="/delete_title" method="POST">
+              <input type="hidden" name=title_id value="{{title[0]}}">
+              <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+              <input style="font: size 10px;" type="submit" value="Poista viesti">
+            </form>
+          {% endif %}
+          <hr>
+        {% endif %}
+      {% endfor %}
+
+  {% endif %}
+
+{% include "layout_kitty.html" %}
+{% endblock %}

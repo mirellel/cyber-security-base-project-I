@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+
+Valitse aihealue:
+<br>
+  {% for topic in topics %}
+    <a href="/topic/{{topic[0]}}">{{ topic[1] }}</a>
+    <br>
+  {% endfor %}
+  {% if session.user_role==2 %}
+    <p>Lisää aihe:</p>
+    <form action="add_topic" method="POST">
+      <input type="text" name="new_topic" minlength="1" maxlength="30">
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+      <input type="submit" value="Lisää">
+    </form>
+  {% endif %}
+<br>
+<a href="/">Palaa etusivulle</a>
+
+{% endblock %}

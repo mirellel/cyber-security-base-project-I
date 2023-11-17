@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2 style="color:rgb(95, 23, 73)">{{ name }}</h2>
+  <p style="font-size: small;">Keskustelun aloitti:{{ posted_by }}</p>
+  <p2 style="font-size: small;">Keskustelu aloitettiin: {{ posted_at }}</p2>
+  <p style="font-size: small;">Tykkäykset: {{ num_of_likes }}</p>
+  <br><br>
+  <p3 style="color:rgb(95, 23, 73)">{{ content }}</p3>
+<br><br><br>
+<hr>
+{% if session.username %}
+<form action="/like_message" method="POST">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+  <input type="hidden" name="title_id" value="{{ id }}">
+  <input id="button" type="submit" value="Tykkää">
+</form>
+{% endif %}
+
+<p>Kommenttien määrä: {{ num_of_comments[0] }}</p>
+{% if post_comments %}
+  <p style="color:rgb(95, 23, 73); font-size: medium;">Kommentit:</p>
+    {% for comment in post_comments %}
+      {% if comment[4] %}
+        <p style="color:rgb(95, 23, 73)font-size: small;">{{ comment[2] }} @ {{ comment[3] }}: </p>
+        <p2 style="color:rgb(95, 23, 73)">{{ comment[0] }}</p2>
+        {% if session.user_role==2 or session.username==comment[2] %}
+          <form action="/delete_comment" method="POST">
+            <input type="hidden" name=comment_id value="{{comment[5]}}">
+            <input type="hidden" name=title_id value="{{ id }}">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+            <input style="font: size 10px;" type="submit" value="Poista kommentti">
+          </form>
+        {% endif %}
+        <hr>
+      {% endif %}
+    {%  endfor %}
+{%  endif %}
+
+<br><br><br>
+{% if session.username %}
+  <form action="/new_comment" method="POST">
+    <p4 style="font-size: medium; color:rgb(95, 23, 73);">Kommentoi:</p4>
+    <br>
+    <textarea id="comment" name="comment" rows="4" cols="50">
+    </textarea>
+    <br>
+    <input type="hidden" id="commentor" name="commentor" value="{{session.username}}">
+    <input type="hidden" id="title_id "name="title_id" value="{{id}}">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    <input type="submit" value="Lähetä">
+  </form>
+{% endif %}
+
+<a href="/">Palaa etusivulle</a>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Hei, {{session.username}}!</h2>
+<br><br>
+Olet aloittanut {{ num_of_posts[0] }} keskustelua ja lähettänyt {{ num_of_comments[0] }} kommenttia.
+<br>
+{% if deleted_posts %}
+  <h3>Poistetut viestit:</h3>
+  {% for post in deleted_posts %}
+    <p>Otsikko: {{post[1]}}</p>
+    <p>Sisältö: {{post[2]}}</p>
+    <p>Lähetetty: {{post[3]}}</p>
+    <form action="/restore_post" method="POST">
+        <input type="hidden" name="title_id" value="{{post[0]}}">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        <input type="submit" value="Palauta keskustelu">
+      </form>
+    <hr>
+  {% endfor %}
+{% endif %}
+<br>
+
+{% if deleted_comments %}
+  <h3>Poistetut kommentit:</h3>
+  {% for comment in deleted_comments %}
+    <p>Kommentti: {{comment[1]}}</p>
+    <p>Lähetetty: {{comment[2]}}</p>
+    <form action="/restore_comment" method="POST">
+      <input type="hidden" name="comment_id" value="{{comment[0]}}">
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+      <input type="submit" value="Palauta commentti">
+    </form>
+    <hr>
+  {% endfor %}
+{% endif %}
+<br>
+<a href="/">Palaa etusivulle</a>
+{% endblock %}
