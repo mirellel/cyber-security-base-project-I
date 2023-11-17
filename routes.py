@@ -37,6 +37,7 @@ def logout():
 	users.logout()
 	return redirect("/")
 
+# Identification and Authetication // fix commented below
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "GET":
@@ -61,6 +62,17 @@ def register():
 
         if " " in password1:
             return render_template("error.html", message="Salasanassa ei saa olla välilyöntejä")
+        # if len(password1)<6:
+        #   return render_template("error.html", message="Salasanassa on liian lyhyt")
+        # letters = False
+        # numbers = True
+        # for char in password1:
+        #   if char in 'abcdefghijklmnopqrstuvwxyzåäö"
+        #       letters = True
+        #   if char in '0123456789'
+        #       numbers = True
+        # if not letter or not numbers
+        #   return return render_template("error.html", message="Salasanassa täytyy olla numeroja sekä kirjaimia")
 
         role = request.form["role"]
         if role not in ("1", "2"):
@@ -165,6 +177,7 @@ def comment():
 
         return redirect("/post/"+post_id)
 
+# CSRF // fix commented below
 @app.route("/delete_comment/<int:comment_id>", methods=["GET", "POST"])
 def delete_comment(comment_id):
     # users.check_csrf()
