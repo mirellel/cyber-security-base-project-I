@@ -13,7 +13,7 @@
     {% endif %}
   {% endif %}
 <form action="/account" method="POST">
-  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+  <!--input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"-->
   <input type="hidden" name="user_id" value="{{ session.user_id }}">
   <input type="hidden" name="username" value="{{ session.username }}">
   <input type="submit" value="Tilini">
@@ -53,8 +53,8 @@ Viestien määrä: {{post_count[0]}}
           <br>
           {% if session.user_role==2 or session.user_id==title[4] %}
             <form action="/delete_title" method="POST">
+              <!--input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"-->
               <input type="hidden" name=title_id value="{{title[0]}}">
-              <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
               <input style="font: size 10px;" type="submit" value="Poista viesti">
             </form>
           {% endif %}

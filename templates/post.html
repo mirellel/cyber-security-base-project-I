@@ -11,7 +11,7 @@
 <hr>
 {% if session.username %}
 <form action="/like_message" method="POST">
-  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+  <!--input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"-->
   <input type="hidden" name="title_id" value="{{ id }}">
   <input id="button" type="submit" value="Tykkää">
 </form>
@@ -26,9 +26,9 @@
         <p2 style="color:rgb(95, 23, 73)">{{ comment[0] }}</p2>
         {% if session.user_role==2 or session.username==comment[2] %}
           <form action="/delete_comment" method="POST">
+            <!--input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"-->
             <input type="hidden" name=comment_id value="{{comment[5]}}">
             <input type="hidden" name=title_id value="{{ id }}">
-            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             <input style="font: size 10px;" type="submit" value="Poista kommentti">
           </form>
         {% endif %}
@@ -45,9 +45,9 @@
     <textarea id="comment" name="comment" rows="4" cols="50">
     </textarea>
     <br>
+    <!--input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"-->
     <input type="hidden" id="commentor" name="commentor" value="{{session.username}}">
     <input type="hidden" id="title_id "name="title_id" value="{{id}}">
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     <input type="submit" value="Lähetä">
   </form>
 {% endif %}

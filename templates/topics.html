@@ -10,8 +10,8 @@ Valitse aihealue:
   {% if session.user_role==2 %}
     <p>Lisää aihe:</p>
     <form action="add_topic" method="POST">
+      <!--input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"-->
       <input type="text" name="new_topic" minlength="1" maxlength="30">
-      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
       <input type="submit" value="Lisää">
     </form>
   {% endif %}
