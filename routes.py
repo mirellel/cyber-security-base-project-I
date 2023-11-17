@@ -72,7 +72,7 @@ def register():
 
 @app.route("/account", methods=["GET","POST"])
 def access_account():
-    users.check_csrf()
+    # users.check_csrf()
     user_id = request.form["user_id"]
     username = request.form["username"]
     if request.method == "GET":
@@ -115,7 +115,7 @@ def created():
 
 @app.route("/delete_title", methods=["GET", "POST"])
 def delete_title():
-    users.check_csrf()
+    # users.check_csrf()
     title_id = request.form["title_id"]
     try:
         posts.delete_title(title_id)
@@ -126,7 +126,7 @@ def delete_title():
 
 @app.route("/restore_post", methods=["GET", "POST"])
 def restore_post():
-    users.check_csrf()
+    # users.check_csrf()
     title_id = int(request.form["title_id"])
     try:
         posts.restore_deleted_post(title_id)
@@ -149,7 +149,7 @@ def show_title(title_id):
 
 @app.route("/new_comment", methods=["GET", "POST"])
 def comment():
-    users.check_csrf()
+    # users.check_csrf()
     if request.method == "GET":
         return render_template("post/<int:title_id>")
     if request.method == "POST":
@@ -167,7 +167,7 @@ def comment():
 
 @app.route("/delete_comment", methods=["GET", "POST"])
 def delete_comment():
-    users.check_csrf()
+    # users.check_csrf()
     comment_id = request.form["comment_id"]
     post_id =  request.form["title_id"]
     try:
@@ -180,7 +180,7 @@ def delete_comment():
 
 @app.route("/restore_comment", methods=["GET", "POST"])
 def restore_comment():
-    users.check_csrf()
+    # users.check_csrf()
     comment_id = request.form["comment_id"]
     try:
         comments.restore_comment(comment_id)
@@ -203,7 +203,7 @@ def show_titles_by_topic(topic_id):
 
 @app.route("/add_topic", methods=["GET", "POST"])
 def add_topic():
-    users.check_csrf()
+    # users.check_csrf()
     if request.method =="GET":
         return render_template("/topics")
 
@@ -219,7 +219,7 @@ def add_topic():
 
 @app.post("/like_message")
 def like_title():
-    users.check_csrf()
+    # users.check_csrf()
     title_id = request.form["title_id"]
 
     if users.user_id()>0:

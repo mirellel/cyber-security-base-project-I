@@ -27,6 +27,7 @@
 {% endif %}
 <br><br>
 
+{% if session.username %}
 <a href="/topics">Selaa aiheita</a>
 <br>
 Viestien määrä: {{post_count[0]}}
@@ -62,6 +63,6 @@ Viestien määrä: {{post_count[0]}}
       {% endfor %}
 
   {% endif %}
-
+{% endif %}
 {% include "layout_kitty.html" %}
 {% endblock %}
