@@ -165,17 +165,17 @@ def comment():
 
         return redirect("/post/"+post_id)
 
-@app.route("/delete_comment", methods=["GET", "POST"])
-def delete_comment():
+@app.route("/delete_comment/<int:comment_id>", methods=["GET", "POST"])
+def delete_comment(comment_id):
     # users.check_csrf()
-    comment_id = request.form["comment_id"]
-    post_id =  request.form["title_id"]
-    try:
-        comments.delete_comment(comment_id)
+    if request.method == "POST":
+        post_id =  request.form["title_id"]
+        try:
+            comments.delete_comment(comment_id)
 
-    except:
-        return render_template("error.html", message="Kommentin postaminen epäonnistui")
-    return redirect("/post/"+post_id)
+        except:
+            return render_template("error.html", message="Kommentin postaminen epäonnistui")
+        return redirect("/post/"+post_id)
 
 
 @app.route("/restore_comment", methods=["GET", "POST"])
