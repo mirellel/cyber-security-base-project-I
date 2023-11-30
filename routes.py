@@ -98,7 +98,8 @@ def access_account():
         deleted_comments = users.get_users_deleted_comments(username)
         return render_template("account.html", num_of_posts=num_of_posts, num_of_comments=num_of_comments, 
         deleted_posts=deleted_posts, deleted_comments=deleted_comments)
-    
+
+# CSRF // fix commented below  
 @app.route("/account_info/<int:id>", methods=["GET", "POST"])
 def access_account_info(id):
     # if session["csrf_token"] != request.form["csrf_token"]:
@@ -188,7 +189,7 @@ def comment():
 
         return redirect("/post/"+post_id)
 
-# CSRF // fix commented below
+
 @app.route("/delete_comment/<int:comment_id>", methods=["GET", "POST"])
 def delete_comment(comment_id):
     # users.check_csrf()
