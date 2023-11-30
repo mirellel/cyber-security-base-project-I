@@ -101,6 +101,8 @@ def access_account():
     
 @app.route("/account_info/<int:id>", methods=["GET", "POST"])
 def access_account_info(id):
+    # if session["csrf_token"] != request.form["csrf_token"]:
+    #   abort(403)       
     if request.method == 'GET':
         password = users.get_password(id)
         html = f'<p>Username: {password[0]}<br>Password: {password[1]}</p><a href="/">Back</a>'

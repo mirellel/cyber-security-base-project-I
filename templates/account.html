@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
 <h2>Hei, {{session.username}}!</h2>
+<form action="/account_info" method="GET">
+  <!--input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"-->
+  <a href="/account_info/{{ session.user_id }}"> Tilin Tiedot </a>
+</form>
 <br><br>
 Olet aloittanut {{ num_of_posts[0] }} keskustelua ja lähettänyt {{ num_of_comments[0] }} kommenttia.
 <br>
