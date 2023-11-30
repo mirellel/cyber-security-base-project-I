@@ -37,7 +37,7 @@ def logout():
 	users.logout()
 	return redirect("/")
 
-# Identification and Authetication // fix commented below
+# Broken Authentication // fix commented below
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "GET":
@@ -62,6 +62,8 @@ def register():
 
         if " " in password1:
             return render_template("error.html", message="Salasanassa ei saa olla välilyöntejä")
+        # possible fix:
+
         # if len(password1)<6:
         #   return render_template("error.html", message="Salasanassa on liian lyhyt")
         # letters = False
@@ -96,6 +98,13 @@ def access_account():
         deleted_comments = users.get_users_deleted_comments(username)
         return render_template("account.html", num_of_posts=num_of_posts, num_of_comments=num_of_comments, 
         deleted_posts=deleted_posts, deleted_comments=deleted_comments)
+    
+@app.route("/account_info/<int:id>", methods=["GET", "POST"])
+def access_account_info(id):
+    if request.method == 'GET':
+        password = users.get_password(id)
+        html = f'<p>Username: {password[0]}<br>Password: {password[1]}</p><a href="/">Back</a>'
+        return html
 
 @app.route("/create", methods=["GET", "POST"])
 def new_title():

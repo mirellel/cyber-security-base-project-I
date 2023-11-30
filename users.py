@@ -10,7 +10,9 @@ def login(username, password):
     user = result.fetchone()
     if not user:
         return False
-    if not check_password_hash(user[0], password):
+    # possible fix
+    #if not check_password_hash(user[0], password)
+    if password != user[0]:
         return False
         
     session["user_id"] = user[1]
@@ -24,12 +26,15 @@ def logout():
     del session["username"]
     del session["user_role"]
 
+# Sensitive Data Exposure 
+
 def register(username, password, role):
-    hash_value = generate_password_hash(password)
+    # possible fix:
+    #hash_value = generate_password_hash(password)
     try:
         sql= """INSERT INTO users (username, password, role)
                 VALUES (:username, :password, :role)"""
-        db.session.execute(sql, {"username":username, "password":hash_value, "role":role})
+        db.session.execute(sql, {"username":username, "password":password, "role":role})
         db.session.commit()
     except:
         return False
@@ -41,6 +46,12 @@ def check_csrf():
 
 def user_id():
     return session.get("user_id", 0)
+
+def get_password(id):
+    sql = 'SELECT username, password FROM users WHERE id=:id'
+    result = db.session.execute(sql, {'id':id})
+    user = result.fetchone()
+    return user
 
 def posts_made_by_user(user_id):
     try:
