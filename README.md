@@ -10,6 +10,7 @@ This project is implemented with Python and Flask. For the application to work, 
 - Install needed dependencies with command ```pip install -r requirements.txt```
 - Create a .env file in the root folder that has the information
   - ```DATABASE_URL='postgresql:///yourusername'```
+    - If this does not work you might have to use ```postgresql+psycopq2:///yourusername``` or ```postgresql:///yourusername:yourpassword@host5432/projectname``` for DATABASE_URL
   - ```SECRET_KEY=yoursecretkey```
   - For example, you can generate a secret_key in Python with the secrets library:
     - ```>>> import secrets```
