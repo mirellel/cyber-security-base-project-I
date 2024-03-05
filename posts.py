@@ -46,16 +46,10 @@ def get_post_count():
     except:
         return False
 
-# Injection
-def delete_title(title_id):
-    sql = """UPDATE titles SET visibility=FALSE WHERE id=:id"""
-    db.session.execute(sql)
-    db.session.commit()
-
-    # Possible fix
-    #sql = """"update titles set visibility=FALSE where id=:id""""
-    #db.session.execute(sql, 'id':title_id)
-    #db.sessuin.commit()
+def delete_title(id):
+    sql = """"update titles set visibility=FALSE where id=:id"""
+    db.session.execute(sql, {'id':id})
+    db.sessuin.commit()
 
     return True
 

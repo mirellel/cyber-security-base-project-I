@@ -53,11 +53,16 @@ def get_comment_count():
     except:
         return False
 
-
-def delete_comment(comment_id):
-    sql = """UPDATE comments SET visibility=FALSE WHERE id=:id"""
-    db.session.execute(sql, {"id":comment_id})
+# Injection
+def delete_comment(id):
+    sql = f"DELETE FROM comments WHERE id='{id}'"
+    db.session.execute(sql)
     db.session.commit()
+
+    # fix
+    # sql = """DELETE FROM comments WHERE id=:id"""
+    # db.session.execute(sql, {"id":id})
+    # db.session.commit()
 
     return True
 

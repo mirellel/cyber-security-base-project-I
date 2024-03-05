@@ -123,7 +123,7 @@ def created():
     if request.method == "GET":
         return render_template("new.html", all_topics=all_topics)
     if request.method == "POST":
-        users.check_csrf()
+        #users.check_csrf()
         title = request.form["title"]
         comment = request.form["comment"]
         id=request.form["user_id"]
@@ -137,12 +137,11 @@ def created():
 
         return redirect("/create")
 
-@app.route("/delete_title", methods=["GET", "POST"])
-def delete_title():
+@app.route("/delete_title/<int:id>", methods=["GET", "POST"])
+def delete_title(id):
     # users.check_csrf()
-    title_id = request.form["title_id"]
     try:
-        posts.delete_title(title_id)
+        posts.delete_title(id)
     except:
         return render_template("error.html", message="Viestin postaminen epäonnistui")
 
@@ -194,13 +193,12 @@ def comment():
 def delete_comment(comment_id):
     # users.check_csrf()
     if request.method == "POST":
-        post_id =  request.form["title_id"]
         try:
             comments.delete_comment(comment_id)
 
         except:
             return render_template("error.html", message="Kommentin postaminen epäonnistui")
-        return redirect("/post/"+post_id)
+        return redirect("/")
 
 
 @app.route("/restore_comment", methods=["GET", "POST"])
