@@ -188,11 +188,19 @@ def comment():
 
         return redirect("/post/"+post_id)
 
-
+# Broken access control, fix below
 @app.route("/delete_comment/<int:comment_id>", methods=["GET", "POST"])
 def delete_comment(comment_id):
     # users.check_csrf()
     if request.method == "POST":
+        
+        # fix 
+        # user = request.form["user"]
+        # commentor = comments.get_commentor(commend_id)
+        # if commentor != user:
+        #   return render_template("error.html", message="Kommentin postaminen epäonnistui")
+        # elif commentor == user:
+        #   comments.delete_comment(comment_id)
         try:
             comments.delete_comment(comment_id)
 

@@ -19,6 +19,11 @@ def create_comment(comment, title_id, username, visibility):
 
     return True
 
+def get_commentor(comment_id):
+    sql = """SELECT FROM COMMENTS commentor WHERE id=:comment_id"""
+    commentor = db.session.execute(sql, {"comment_id":comment_id}).fetchall()
+    return commentor
+
 def get_comments(title_id):
     try:
         sql = """

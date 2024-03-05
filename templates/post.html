@@ -28,6 +28,7 @@
         <!--{% if session.user_role==2 or session.username==comment[2] %}-->
           <form action="/delete_comment/{{comment[5]}}" method="POST">
             <!--input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"-->
+            <!--input type="hidden" name="user" value="{{ session.user_id }}"-->
             <input type="hidden" name=title_id value="{{ id }}">
             <input style="font: size 10px;" type="submit" value="Poista kommentti">
           </form>
